@@ -16,7 +16,7 @@ export default function ProductModal() {
             onClick={closeModal}
         >
             <div
-                className="bg-white border border-black w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded relative"
+                className="bg-white b-10 border border-black w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded relative"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Yopish tugmasi */}

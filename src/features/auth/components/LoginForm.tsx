@@ -91,7 +91,8 @@ export const LoginForm = () => {
             <div className="relative">
               <input
                 {...register("password")}
-                type= "text"
+                type= "password"
+                name="password"
                 placeholder="••••••••"
                 autoComplete="current-password"
                 className={`
@@ -104,7 +105,6 @@ export const LoginForm = () => {
                   }
                 `}
               />
-              emilyspass
             </div>
             {errors.password && (
               <p className="text-red-300 text-xs font-medium flex items-center gap-1.5">
