@@ -43,26 +43,6 @@ export default function ProductModal() {
                             />
                         </div>
 
-                        {/* Kichik rasmlar (gallery) */}
-                        {selectedProduct.images?.length > 1 && (
-                            <div className="flex gap-2 px-4 py-3 border-b border-neutral-200 overflow-x-auto">
-                                {selectedProduct.images.map((img, index) => (
-                                    <img
-                                        key={index}
-                                        src={img}
-                                        alt={`${index + 1}`}
-                                        onClick={() => setActiveImg(index)}
-                                        className={`w-14 h-14 object-contain border rounded p-1 bg-neutral-50 shrink-0 cursor-pointer transition-all
-                                            ${activeImg === index
-                                                ? "border-black"
-                                                : "border-neutral-200 hover:border-neutral-400"
-                                            }
-                                        `}
-                                    />
-                                ))}
-                            </div>
-                        )}
-
                         {/* Content */}
                         <div className="p-5 space-y-4">
 
