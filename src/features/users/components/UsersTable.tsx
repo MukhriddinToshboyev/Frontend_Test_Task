@@ -61,7 +61,7 @@ export const UsersTable = () => {
                                 className="border-b border-neutral-100 hover:bg-neutral-50 transition-all"
                             >
                                 <td className="px-4 py-3 text-[11px] text-neutral-400">
-                                    {user.id}
+                                    {user.id - 15}
                                 </td>
                                 <td className="px-4 py-3">
                                     <div className="flex items-center gap-2">
