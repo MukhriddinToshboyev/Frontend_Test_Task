@@ -15,8 +15,6 @@ export const useProductsDetailes = ( id: number | null) =>{
         enabled: !!id,
     });
 
-    console.log ("query", query)
-
     useEffect(()=>{
         setModalLoading(query.isLoading);
 

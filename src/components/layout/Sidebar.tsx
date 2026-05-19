@@ -2,7 +2,7 @@
 
 import { useAuthStore } from "@/src/features/auth/store/auth.store";
 import Link from "next/link";
-import { LogOut, LucideLayoutDashboard, LucidePackage, Store } from "lucide-react";
+import { LogOut, LucideLayoutDashboard, LucidePackage, Store, Users } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
@@ -13,15 +13,10 @@ const NAV_ITEMS = [
         icon: <LucideLayoutDashboard size={20} />,
     },
     {
-        label: "Maxsulotlar",
-        href: "/dashboard/products",
-        icon: <LucidePackage size={20} />,
+        label: "Foydalanuvchilar",
+        href: "/dashboard/users",
+        icon: <Users size={20} />,
     },
-    {
-        label: "Buyurtmalar",
-        href: "/dashboard/card",
-        icon: <Store size={20} />,
-    }
 ]
 
 export const Sidebar = () => {

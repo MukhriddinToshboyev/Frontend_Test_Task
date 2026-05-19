@@ -1,7 +1,8 @@
-// import { Orders } from "@/src/features/card/components/Orders"
 
-import { Orders } from "@/src/features/card/components/Orders";
+import { CartDrawer } from "@/src/features/card/components/Carts";
 
-export default function CardPage(){
-    return <Orders/>
+
+
+export default function CartPage(){
+    return <CartDrawer/>
 }

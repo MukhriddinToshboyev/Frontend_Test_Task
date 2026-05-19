@@ -25,13 +25,13 @@ export const useLogin = () =>{
         },
         // qaysi funksiyani chaqirish kerakligini aytadi 
         mutationFn: (data: LoginRequest) =>{
-            console.log("1. mutationFn ishladi:", data); // ← qo'sh
+        console.log("1. mutationFn ishladi:", data); 
         return loginService(data)
         },
 
         // request jonatganimizdan keyin bizga response kelgan bolsa uni storega yozamiz 
         onSuccess: (response) =>{
-                console.log("2. onSuccess ishladi:", response); // ← qo'sh
+            console.log("2. onSuccess ishladi:", response);
             const userData = {
                 id: response.id,
                 username: response.username,

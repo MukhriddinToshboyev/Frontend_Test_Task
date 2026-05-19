@@ -41,7 +41,6 @@ const api = axios.create({
           if(!refreshToken){
             throw new Error("Refresh Token topilmadi!!!");
           }
-          console.log("1. Refresh so'rovi yuborilmoqda, token:", refreshToken);
 
           // refreshTokenni olish 
           const refreshResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
@@ -52,9 +51,6 @@ const api = axios.create({
               withCredentials: true,
             }
            );
-          // Agar serverdan javob kelsa, kod shu yerga o'tadi:
-          console.log("2. Serverdan muvaffaqiyatli javob keldi! To'liq response:", refreshResponse);
-          console.log("3. Kelgan ma'lumot (data):", refreshResponse.data);
 
           const newAccessToken = refreshResponse.data.accessToken;
           const newRefreshToken = refreshResponse.data.refreshToken;
@@ -67,7 +63,7 @@ const api = axios.create({
           })
 
           Cookies.set("refreshToken", newRefreshToken,{
-            expires: 7,
+            expires: 30,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
             path: "/",

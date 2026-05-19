@@ -7,6 +7,7 @@ interface ProductState {
     total: number;
     isLoading: boolean;
     error: string | null;
+    searchTeam: string;
 
     // Modal uchun holatlar 
     isModalOpen: boolean;
@@ -17,6 +18,9 @@ interface ProductState {
     setTotal: (total: number) => void;
     setIsloading: (isLoading: boolean) => void;
     setError: (error: string | null) => void;
+
+    //search funksiyalar 
+    setSearchTeam: (searchTeam: string) => void;
 
      // Modal uchun funksiyalar 
     openModal: () => void;
@@ -35,18 +39,24 @@ export const productStore = create<ProductState>()(
             isLoading: false,
             error: null,
 
+            // search
+            searchTeam: "",
+            
+            
             // modal qiymatlari
             isModalOpen: false,
             selectedProduct: null,
             isModalLoading: false,
-
-
-
+            
+            
+            
             setProducts: (products) => set({ products }),
             setTotal: (total) => set({ total }),
             setIsloading: (isLoading) => set({ isLoading }),
             setError: (error) => set({ error }),
-
+            
+            // search
+            setSearchTeam: (searchTeam) => set({ searchTeam }),
 
             // modal funksiyalari
             openModal: () => set({isModalOpen: true}),

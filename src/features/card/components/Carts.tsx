@@ -1,34 +1,24 @@
 "use client";
 
 import { Trash2, ShoppingCart } from "lucide-react";
-import { useGetCarts } from "../hooks/useGetCarts";
-import { useDeleteCart } from "../hooks/useDeleteCart";
+import { useAddCart } from "../hooks/useAddCart";
+import { cartStore } from "../store/Cart.store";
+// import { useRouter } from "next/router";
 
-export const Orders = () => {
-  const { data, isLoading, isError } = useGetCarts();
-  const { deleteCart, isDeleting } = useDeleteCart();
-  const products = data?.products ?? [];
+export const CartDrawer = () => {
+
+    // const  router = useRouter()
+
+  const { cartProducts, removeFromCart, clearCart } = cartStore();
+  const { addCart, isAdding } = useAddCart();
+  const products = cartProducts ?? [];
+
 
   const total = products.reduce(
-    (sum: number, product,) => sum + product.price * product.quantity,
+    (sum: number, product) => sum + product.price * product.quantity,
     0
   );
 
-  if (isLoading) {
-    return (
-      <div className="text-center py-20 text-xs font-mono uppercase tracking-widest text-neutral-400 animate-pulse">
-        Yuklanmoqda...
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="text-center py-20 text-xs text-red-500 font-mono uppercase font-bold border border-red-200 bg-red-50/50 rounded">
-        Xatolik yuz berdi!
-      </div>
-    );
-  }
 
   if (products.length === 0) {
     return (
@@ -36,23 +26,35 @@ export const Orders = () => {
         <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-full text-neutral-300">
           <ShoppingCart size={32} strokeWidth={1.5} />
         </div>
-        <p className="uppercase text-xs font-bold tracking-wider mt-1">Buyurtmalar bosh</p>
+        <p className="uppercase text-xs font-bold tracking-wider mt-1">Savat bosh</p>
       </div>
     );
   }
+
+ const handleSubmit = () => {
+        if (cartProducts.length === 0) return;
+
+        const products = cartProducts.map((p) => ({
+            id: p.id,
+            quantity: p.quantity,
+            title: p.title,
+            price: p.price,
+            thumbnail: p.thumbnail,
+
+        }));
+        addCart(products);
+    };
 
   return (
     <div className="space-y-6 font-mono text-black max-w-md mx-auto">
       <div className="border-b border-neutral-200 pb-4 flex items-end justify-between">
         <div>
-          <h2 className="text-sm font-black uppercase tracking-widest text-neutral-800">Buyurtmalar tarixi</h2>
+          <h2 className="text-sm font-black uppercase tracking-widest text-neutral-800">Savat (Cart)</h2>
           <p className="text-[10px] text-neutral-400 uppercase mt-0.5 font-bold">
             Tanlangan: {products.length} xil mahsulot
           </p>
         </div>
-        <span className="text-[10px] bg-black text-white px-2 py-0.5 font-bold uppercase rounded-sm">
-          Aktiv
-        </span>
+
       </div>
 
       <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
@@ -83,8 +85,7 @@ export const Orders = () => {
                 ${(product.price * product.quantity).toLocaleString()}
               </span>
               <button
-                onClick={() => deleteCart(product.id)}
-                disabled={isDeleting}
+                onClick={() => removeFromCart(product.id)}
                 title="Mahsulotni o'chirish"
                 className="p-2 text-neutral-300 hover:text-red-500 border border-transparent hover:border-red-100 hover:bg-red-50/50 rounded transition-all duration-150 disabled:opacity-40 shrink-0"
               >
@@ -96,14 +97,32 @@ export const Orders = () => {
       </div>
 
       <div className="border-t-2 border-dashed border-neutral-200 pt-5 space-y-4">
+
+        <button
+            onClick={clearCart}
+            className="text-[10px] text-red-500 border border-red-500 px-3 py-1.5 hover:bg-red-50 uppercase font-bold transition-all"
+            >
+            Hammasini tozalash
+        </button>
+
         <div className="flex items-center justify-between">
           <span className="text-xs uppercase font-bold tracking-widest text-neutral-500">
             Jami summa:
           </span>
           <span className="text-lg font-black text-black">
-            ${total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            ${total.toLocaleString()}
           </span>
         </div>
+
+
+
+         <button
+            onClick={handleSubmit}
+            disabled={isAdding}
+          className="w-full text-center bg-black text-white py-3 text-xs font-bold uppercase tracking-widest border border-black hover:bg-white hover:text-black transition-colors duration-200 rounded-sm"
+            >
+            {isAdding ? "Yuborilmoqda..." : "Buyurtma berish"}
+         </button>
       </div>
     </div>
   );

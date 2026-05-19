@@ -6,7 +6,7 @@ export const getProductsService = async (params?: ProductRequest): Promise<Produ
 
     const response = await api.get<ProductResponse>("/auth/products",{
         params:{
-            limit: params?.limit || 10,
+            limit: params?.limit || 0,
             skip: params?.skip || 0,
             select: params?.select,
         },
