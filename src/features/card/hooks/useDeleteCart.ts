@@ -2,6 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCartService } from "../services/deleteCard.service";
+import { Product } from "../../products/types";
 
 export const useDeleteCart = () => {
     const queryClient = useQueryClient();
@@ -10,7 +11,7 @@ export const useDeleteCart = () => {
         mutationFn: (cartId: number) => deleteCartService(cartId),
 
         onSuccess: () => {
-            queryClient.setQueryData(["carts"], (oldData: number) => {
+            queryClient.setQueryData(["carts"], (oldData: Product) => {
                 if (!oldData) return oldData;
                 return {
                     ...oldData,

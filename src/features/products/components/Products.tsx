@@ -4,7 +4,7 @@ import { useProducts } from "../hooks/useProducts"
 import { productStore } from "../store/product.store";
 import { useState } from "react";
 import { useProductsDetailes } from "../hooks/useProductsDetailes";
-import ProductModal from "./ProductModal";
+import  ProductModal from "./ProductModal";
 import { useSearchProducts } from "../hooks/useSearch";
 import { ListOrdered, Pencil, Search, Store, Trash2, X } from "lucide-react";
 import { useDeleteProduct } from "../hooks/useDeleteProduct";

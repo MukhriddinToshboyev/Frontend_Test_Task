@@ -3,16 +3,17 @@
 import { Trash2, ShoppingCart } from "lucide-react";
 import { useGetCarts } from "../hooks/useGetCarts";
 import { useDeleteCart } from "../hooks/useDeleteCart";
+import { Product } from "../../products/types";
 
 export const Orders = () => {
   const { data, isLoading, isError } = useGetCarts();
   const { deleteCart, isDeleting } = useDeleteCart();
   const products = data?.products ?? [];
 
-  const total = products.reduce(
-    (sum: number, product,) => sum + product.price * product.quantity,
+    const total = products.reduce(
+    (sum: number, product: Product) => sum + product.price * (product.quantity || 1),
     0
-  );
+    );
 
   if (isLoading) {
     return (

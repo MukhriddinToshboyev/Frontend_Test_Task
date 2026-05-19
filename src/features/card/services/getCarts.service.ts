@@ -3,6 +3,6 @@ import { ProductResponse } from "../../products/types";
 
 
 export const getCartsService = async () => {
-    const response = await api.get<ProductResponse>(`/carts/1`);
-    return response;
+    const response = await api.get(`/carts/1`);
+    return response as unknown as ProductResponse;
 }
