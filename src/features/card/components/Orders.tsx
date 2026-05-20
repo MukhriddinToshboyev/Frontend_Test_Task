@@ -2,17 +2,14 @@
 
 import { Trash2, ShoppingCart } from "lucide-react";
 import { useGetCarts } from "../hooks/useGetCarts";
-import { useDeleteCart } from "../hooks";
-import { Product } from "../../products/types";
-import { useDeleteProduct } from "../../products/hooks";
+import { useDeleteCart } from "../hooks/useDeleteCart";
+import { Cart } from "../types";
 
 export const Orders = () => {
   const { data, isLoading, isError } = useGetCarts();
-  const { deleteProduct } = useDeleteProduct();
-  const products = data?.products ?? [];
+  const { deleteCart, isDeleting } = useDeleteCart();
 
-    const total = products.reduce(
-    (sum: number, product: Product) => sum + product.price * product.quantity, 0 );
+  const carts: Cart[] = data?.carts ?? [];
 
   if (isLoading) {
     return (
@@ -30,7 +27,7 @@ export const Orders = () => {
     );
   }
 
-  if (products.length === 0) {
+  if (carts.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-28 text-neutral-400 font-mono gap-3">
         <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-full text-neutral-300">
@@ -42,12 +39,16 @@ export const Orders = () => {
   }
 
   return (
-    <div className="space-y-6 font-mono text-black max-w-md mx-auto">
+    <div className="space-y-8 font-mono text-black max-w-2xl mx-auto">
+
+      {/* Header */}
       <div className="border-b border-neutral-200 pb-4 flex items-end justify-between">
         <div>
-          <h2 className="text-sm font-black uppercase tracking-widest text-neutral-800">Buyurtmalar tarixi</h2>
+          <h2 className="text-sm font-black uppercase tracking-widest text-neutral-800">
+            Buyurtmalar tarixi
+          </h2>
           <p className="text-[10px] text-neutral-400 uppercase mt-0.5 font-bold">
-            Tanlangan: {products.length} xil mahsulot
+            Jami: {carts.length} ta buyurtma
           </p>
         </div>
         <span className="text-[10px] bg-black text-white px-2 py-0.5 font-bold uppercase rounded-sm">
@@ -55,58 +56,74 @@ export const Orders = () => {
         </span>
       </div>
 
-      <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
-        {products.map((product) => (
-          <div
-            key={product.id}
-            className="flex items-center gap-4 p-3 bg-white border border-neutral-200 hover:border-black rounded transition-all duration-200 group"
-          >
-            <div className="w-12 h-12 flex items-center justify-center bg-neutral-50 border border-neutral-100 rounded p-1 shrink-0">
-              <img
-                src={product.thumbnail || "/placeholder.jpg"}
-                alt={product.title}
-                className="object-contain w-full h-full"
-              />
-            </div>
+      {/* Cartlar */}
+      {carts.map((cart) => (
+        <div key={cart.id} className="border border-neutral-200 rounded overflow-hidden">
 
-            <div className="flex-1 min-w-0 space-y-0.5">
-              <p className="text-xs font-bold uppercase text-neutral-800 truncate group-hover:text-black">
-                {product.title}
-              </p>
-              <p className="text-[11px] text-neutral-400 font-bold">
-                ${product.price.toLocaleString()} <span className="font-normal text-[10px] text-neutral-300">×</span> {product.quantity} ta
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3 shrink-0">
-              <span className="text-xs font-black text-neutral-900">
-                ${(product.price * product.quantity).toLocaleString()}
-              </span>
+          {/* Cart header */}
+          <div className="flex items-center justify-between px-4 py-3 bg-neutral-50 border-b border-neutral-200">
+            <span className="text-[11px] font-black uppercase">
+              Buyurtma #{cart.id}
+            </span>
+            <div className="flex items-center gap-3">
+              <span className="text-[11px] font-black">${cart.total.toFixed(2)}</span>
               <button
-                onClick={(e) => {
-                e.stopPropagation();
-                deleteProduct(product.id);
-                }}
-                className="p-1.5 bg-white border border-neutral-200 rounded hover:border-red-500 hover:text-red-500 text-neutral-400 transition-all"
-                  aria-label="Ochirish"
-                  >
-                  <Trash2 size={12} />
-                </button>
+                onClick={() => deleteCart(cart.id)}
+                disabled={isDeleting}
+                className="p-1.5 border border-neutral-200 rounded hover:border-red-500 hover:text-red-500 text-neutral-400 transition-all disabled:opacity-50"
+              >
+                <Trash2 size={12} />
+              </button>
             </div>
           </div>
-        ))}
-      </div>
 
-      <div className="border-t-2 border-dashed border-neutral-200 pt-5 space-y-4">
-        <div className="flex items-center justify-between">
-          <span className="text-xs uppercase font-bold tracking-widest text-neutral-500">
-            Jami summa:
-          </span>
-          <span className="text-lg font-black text-black">
-            ${total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </span>
+          {/* Productlar */}
+          <div className="divide-y divide-neutral-100">
+            {cart.products.map((product) => (
+              <div
+                key={product.id}
+                className="flex items-center gap-4 p-3 bg-white hover:bg-neutral-50 transition-all group"
+              >
+                <div className="w-12 h-12 flex items-center justify-center bg-neutral-50 border border-neutral-100 rounded p-1 shrink-0">
+                  <img
+                    src={product.thumbnail || "/placeholder.jpg"}
+                    alt={product.title}
+                    className="object-contain w-full h-full"
+                  />
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-bold uppercase text-neutral-800 truncate">
+                    {product.title}
+                  </p>
+                  <p className="text-[11px] text-neutral-400 font-bold">
+                    ${product.price.toLocaleString()} × {product.quantity} ta
+                  </p>
+                </div>
+
+                <div className="shrink-0 text-right">
+                  <p className="text-xs font-black">${product.total.toFixed(2)}</p>
+                  <p className="text-[10px] text-green-600 font-bold">
+                    ${product.discountedTotal.toFixed(2)}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Cart footer */}
+          <div className="px-4 py-3 bg-neutral-50 border-t border-neutral-200 flex justify-between items-center">
+            <span className="text-[10px] uppercase text-neutral-400 font-bold">
+              Chegirmali narx
+            </span>
+            <span className="text-sm font-black text-green-600">
+              ${cart.discountedTotal.toFixed(2)}
+            </span>
+          </div>
+
         </div>
-      </div>
+      ))}
+
     </div>
   );
 };
