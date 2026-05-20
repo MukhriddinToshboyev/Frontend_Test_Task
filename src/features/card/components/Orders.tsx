@@ -68,7 +68,7 @@ export const Orders = () => {
             <div className="flex items-center gap-3">
               <span className="text-[11px] font-black">${cart.total.toFixed(2)}</span>
               <button
-                onClick={() => deleteCart(cart.id)}
+                onClick={() => deleteCart()}
                 disabled={isDeleting}
                 className="p-1.5 border border-neutral-200 rounded hover:border-red-500 hover:text-red-500 text-neutral-400 transition-all disabled:opacity-50"
               >

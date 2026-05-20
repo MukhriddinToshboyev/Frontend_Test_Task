@@ -12,7 +12,7 @@ export const useDeleteCart = () => {
     const queryClient = useQueryClient();
 
     const { mutate: deleteCart, isPending: isDeleting } = useMutation({
-        mutationFn: (cartId: number) => deleteCartService(cartId),
+        mutationFn: () => deleteCartService(),
         onSuccess: () => {
             queryClient.setQueryData<CartResponse>(["carts"], (oldData) => {
                 if (!oldData) return oldData;

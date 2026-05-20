@@ -1,7 +1,7 @@
 import api from "@/src/lib/axios";
 
 
-export const deleteCartService = async (id: number) => {
-    const response = await api.delete(`/carts/${id}`);
+export const deleteCartService = async () => {
+    const response = await api.delete(`/carts/1`);
     return response;
 }
