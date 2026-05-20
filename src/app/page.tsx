@@ -1,9 +1,6 @@
 
-import { LoginForm } from "../features/auth/components/LoginForm";
+import { redirect } from "next/navigation";
+
 export default function HomePage() {
-     return(
-          <main className="fixed inset-0">
-               <LoginForm/>
-          </main>
-     )
+     redirect("/home");
 }

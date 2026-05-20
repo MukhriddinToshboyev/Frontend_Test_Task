@@ -32,3 +32,16 @@ export interface IUsersResponse {
     skip: number;
     limit: number;
 }
+
+export interface CreateUserRequest {
+    firstName: string;
+    lastName: string;
+    age: number;
+    email?: string;
+    phone?: string;
+    username?: string;
+}
+
+export interface CreateUserResponse extends CreateUserRequest {
+    id: number;
+}

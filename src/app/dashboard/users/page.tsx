@@ -1,11 +1,7 @@
-import { UsersTable } from "@/src/features/users/components/UsersTable";
+import { redirect } from "next/navigation";
 
 const UsersPage = () => {
-    return (
-        <div className="p-6">
-            <UsersTable />
-        </div>
-    );
+    redirect("/admin/users");
 };
 
 export default UsersPage;

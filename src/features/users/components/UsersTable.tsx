@@ -1,14 +1,16 @@
 "use client";
 
+import { useState } from "react";
+import { Plus } from "lucide-react";
 import { useGetUsers } from "../hooks";
 import { IUser } from "../types";
+import { CreateUserModal } from "./CreateUserModal";
 
 export const UsersTable = () => {
+    const [isCreateOpen, setIsCreateOpen] = useState(false);
     const { data, isLoading, isError } = useGetUsers();
 
    const users = (data?.users ?? []).filter((user: IUser) => user.role === "user");
-
-    console.log("users", users);
 
     if (isLoading) {
         return (
@@ -28,19 +30,22 @@ export const UsersTable = () => {
 
     return (
         <div className="font-mono">
-            <div className="mb-4">
-                <h1 className="text-xl font-black uppercase tracking-wider">
-                    Foydalanuvchilar
-                </h1>
-                <p className="text-[11px] text-neutral-500 uppercase mt-0.5">
-                    Jami: {data?.total} ta foydalanuvchi
-                </p>
-            </div>
-
-             <div className="mt-2 flex items-center gap-2">
-                    <span className="px-2 py-1 text-[10px] font-black uppercase rounded bg-red-100 text-red-600">
-                        Admin
-                    </span>
+            <div className="mb-4 flex items-center justify-between">
+                <div>
+                    <h1 className="text-xl font-black uppercase tracking-wider">
+                        Foydalanuvchilar
+                    </h1>
+                    <p className="text-[11px] text-neutral-500 uppercase mt-0.5">
+                        Jami: {data?.total} ta foydalanuvchi
+                    </p>
+                </div>
+                <button
+                    onClick={() => setIsCreateOpen(true)}
+                    className="h-10 w-10 flex items-center justify-center bg-black text-white border border-black rounded hover:bg-white hover:text-black"
+                    aria-label="Yangi user qoshish"
+                >
+                    <Plus size={18} />
+                </button>
             </div>
 
             <div className="border border-neutral-200 rounded overflow-hidden">
@@ -95,6 +100,7 @@ export const UsersTable = () => {
                     </tbody>
                 </table>
             </div>
+            <CreateUserModal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} />
         </div>
     );
 };

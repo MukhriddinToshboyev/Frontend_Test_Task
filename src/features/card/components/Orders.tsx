@@ -4,7 +4,6 @@ import { Trash2, ShoppingCart } from "lucide-react";
 import { useGetCarts } from "../hooks/useGetCarts";
 import { useDeleteCart } from "../hooks";
 import { Product } from "../../products/types";
-import Image from "next/image";
 
 export const Orders = () => {
   const { data, isLoading, isError } = useGetCarts();
@@ -62,10 +61,10 @@ export const Orders = () => {
             className="flex items-center gap-4 p-3 bg-white border border-neutral-200 hover:border-black rounded transition-all duration-200 group"
           >
             <div className="w-12 h-12 flex items-center justify-center bg-neutral-50 border border-neutral-100 rounded p-1 shrink-0">
-              <Image
+              <img
                 src={product.thumbnail || "/placeholder.jpg"}
                 alt={product.title}
-                className="object-cover w-72 h-72"
+                className="object-contain w-full h-full"
               />
             </div>
 

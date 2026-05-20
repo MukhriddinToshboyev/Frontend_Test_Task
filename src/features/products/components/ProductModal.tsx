@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { productStore } from "../store/product.store";
 import { X, Star, Package, Tag, Percent, ShoppingCart } from "lucide-react";
 
 export default function ProductModal() {
     const { isModalOpen, closeModal, selectedProduct, isModalLoading } = productStore();
-    const [activeImg, setActiveImg] = useState(0);
+    const activeImg = 0;
 
     if (!isModalOpen) return null;
 

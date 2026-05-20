@@ -56,7 +56,7 @@ export const CreateProductModal = ({ isOpen, onClose }: Props) => {
                     <X size={16} />
                 </button>
 
-                <h2 className="text-sm font-black uppercase mb-4">Yangi mahsulot qo'shish</h2>
+                <h2 className="text-sm font-black uppercase mb-4">Yangi mahsulot qo&apos;shish</h2>
 
                 <div className="space-y-3">
                     {/* Image */}

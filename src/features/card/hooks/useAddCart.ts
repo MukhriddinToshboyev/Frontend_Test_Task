@@ -1,27 +1,20 @@
-// hooks/useAddCart.ts
-"use client"
+"use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addCartService } from "../services";
+import { AddCartProductRequest, addCartService } from "../services";
 import { cartStore } from "../store/Cart.store";
 
 export const useAddCart = () => {
     const queryClient = useQueryClient();
-    const { clearCart} = cartStore()
+    const { clearCart } = cartStore();
 
     const { mutate: addCart, isPending: isAdding } = useMutation({
-        mutationFn: (products: { id: number; quantity: number }[]) =>
-            addCartService(products),
-
-        onSuccess: (data) => {
+        mutationFn: (products: AddCartProductRequest[]) => addCartService(products),
+        onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["carts"] });
-            clearCart(); 
-            console.log("Cart qo'shildi:", data);
+            clearCart();
         },
-        onError: (error) => {
-            console.log("Xatolik:", error);
-        }
     });
 
     return { addCart, isAdding };
-}
+};

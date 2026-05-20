@@ -20,7 +20,6 @@ export const useProductsDetailes = ( id: number | null) =>{
 
         if (query.data) {
             setSelectProduct(query.data);
-            console.log("images:", query.data.images);
         }
     }, [query.data, query.isLoading, setSelectProduct, setModalLoading]);
     

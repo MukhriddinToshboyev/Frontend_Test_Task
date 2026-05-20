@@ -4,7 +4,6 @@ import z from "zod";
 import { useLogin } from "../hooks";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { useState } from "react";
 
 const loginSchema = z.object({
   username: z
@@ -21,7 +20,6 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export const LoginForm = () => {
   const { login, isPending } = useLogin();
-  // const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -29,114 +27,138 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
+    defaultValues: { username: "", password: "" },
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    login(data);
-  };
+  const onSubmit = (data: LoginFormData) => login(data);
 
   return (
-    <div className="fixed  flex inset-0 flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 p-6">
-        <div className="w-full h-[300px] max-w-md bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/25 overflow-hidden">
-        
-        <div className="px-10 pt-10 pb-8 text-center border-b border-white/15">
+    <div className="fixed inset-0 flex items-center justify-center bg-neutral-100 p-6">
 
-          <h1 className="text-4xl font-bold text-white tracking-tight mb-2">
-            Xush kelibsiz
+      {/* Background grid */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: `linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)`,
+          backgroundSize: "40px 40px",
+        }}
+      />
+
+      {/* Card */}
+      <div className="relative p-10 w-full max-w-lg bg-white border-2 border-black shadow-2xl">
+
+        {/* Yuqori aksent chiziq */}
+        <div className="h-1 w-full bg-black" />
+
+        {/* Header */}
+        <div className="px-14 pt-12 pb-10 border-b-2 border-black">
+          <div className="flex items-center gap-2 mb-8">
+            <div className="w-2.5 h-2.5 bg-black rounded-full" />
+            <span className="text-[11px] font-black uppercase tracking-[0.25em] text-neutral-400">
+              Admin Dashboard
+            </span>
+          </div>
+          <h1 className="text-5xl font-black uppercase tracking-tight text-black leading-none">
+            Tizimga<br />Kirish
           </h1>
-          <p className="text-blue-100 text-base">
-            Tizimga kirish uchun malumotlarni kiriting
-          </p>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="px-10 py-8 space-y-5">
-          
+        <form onSubmit={handleSubmit(onSubmit)} className="px-14 py-12 space-y-10">
+
           {/* Username */}
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-white/90">
+            <label className="block text-[11px] font-black uppercase tracking-[0.2em] text-neutral-500">
               Username
             </label>
             <input
               {...register("username")}
               type="text"
-              placeholder="example@mail.com"
+              placeholder="emilys"
               autoComplete="username"
               className={`
-                w-full px-4 py-3.5 rounded-xl text-white placeholder-white/40
-                bg-white/15 border outline-none
-                transition-all duration-200
+                w-full px-0 py-3 text-base font-mono text-black bg-transparent
+                border-b-2 outline-none transition-all duration-200
+                placeholder:text-neutral-300
                 ${errors.username
-                  ? "border-red-400/70 bg-red-400/10 focus:border-red-400"
-                  : "border-white/25 focus:border-white/60 focus:bg-white/20"
+                  ? "border-red-500"
+                  : "border-neutral-300 focus:border-black"
                 }
               `}
             />
             {errors.username && (
-              <p className="text-red-300 text-xs font-medium flex items-center gap-1.5">
-                {errors.username.message}
+              <p className="text-red-500 text-[11px] font-bold uppercase tracking-wide mt-1">
+                — {errors.username.message}
               </p>
             )}
           </div>
 
           {/* Password */}
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-white/90">
+            <label className="block text-[11px] font-black uppercase tracking-[0.2em] text-neutral-500">
               Parol
             </label>
-            <div className="relative">
-              <input
-                {...register("password")}
-                type= "password"
-                name="password"
-                placeholder="••••••••"
-                autoComplete="current-password"
-                className={`
-                  w-full px-4 py-3.5 pr-12 rounded-xl text-white placeholder-white/40
-                  bg-white/15 border outline-none
-                  transition-all duration-200
-                  ${errors.password
-                    ? "border-red-400/70 bg-red-400/10 focus:border-red-400"
-                    : "border-white/25 focus:border-white/60 focus:bg-white/20"
-                  }
-                `}
-              />
-            </div>
+            <input
+              {...register("password")}
+              type="password"
+              placeholder="••••••••"
+              autoComplete="current-password"
+              className={`
+                w-full px-0 py-3 text-base font-mono text-black bg-transparent
+                border-b-2 outline-none transition-all duration-200
+                placeholder:text-neutral-300
+                ${errors.password
+                  ? "border-red-500"
+                  : "border-neutral-300 focus:border-black"
+                }
+              `}
+            />
             {errors.password && (
-              <p className="text-red-300 text-xs font-medium flex items-center gap-1.5">
-                {errors.password.message}
+              <p className="text-red-500 text-[11px] font-bold uppercase tracking-wide mt-1">
+                — {errors.password.message}
               </p>
             )}
           </div>
 
+          {/* Submit */}
           <div className="pt-2">
             <button
               type="submit"
               disabled={isPending}
               className="
-                w-full py-3.5 px-4 rounded-xl font-bold text-purple-700
-                bg-white hover:bg-blue-50 active:scale-[0.98]
-                shadow-lg shadow-black/20
-                transition-all duration-200
-                disabled:bg-white/50 disabled:text-white/60 disabled:cursor-not-allowed disabled:shadow-none
+                w-full py-5 bg-black text-white
+                text-[13px] font-black uppercase tracking-[0.2em]
+                hover:bg-neutral-800 active:scale-[0.99]
+                transition-all duration-150
+                disabled:bg-neutral-300 disabled:cursor-not-allowed
                 flex items-center justify-center gap-2
               "
             >
               {isPending ? (
                 <>
-                  <span className="w-5 h-5 border-2 border-purple-600 border-t-transparent rounded-full animate-spin" />
+                  <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   Kirish...
                 </>
               ) : (
-                "Kirish"
+                "Kirish →"
               )}
             </button>
           </div>
+
         </form>
+
+        {/* Footer */}
+        <div className="px-14 py-5 border-t-2 border-black flex items-center justify-between">
+          <span className="text-[11px] text-neutral-400 uppercase tracking-widest font-bold">
+            © 2026
+          </span>
+          <div className="flex gap-1.5">
+            <div className="w-2 h-2 bg-black rounded-full" />
+            <div className="w-2 h-2 bg-neutral-200 rounded-full" />
+            <div className="w-2 h-2 bg-neutral-200 rounded-full" />
+          </div>
+        </div>
+
       </div>
     </div>
   );

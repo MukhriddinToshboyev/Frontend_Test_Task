@@ -1,7 +1,7 @@
 // components/UpdateProductModal.tsx
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { X } from "lucide-react";
 import { useUpdateProduct } from "../hooks/useUpdateProduct";
 import { Product } from "../types";

@@ -1,37 +1,21 @@
-
-
 import { useMutation } from "@tanstack/react-query";
-import {useAuthStore} from "../store/auth.store"
+import { useAuthStore } from "../store/auth.store";
 import { LoginRequest } from "../types";
 import { loginService } from "../services";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
-
-export const useLogin = () =>{
-    
-    const {setUser, setAccessToken, setError, setIsLoading } = useAuthStore();
-
+export const useLogin = () => {
+    const { setUser, setAccessToken, setError, setIsLoading } = useAuthStore();
     const router = useRouter();
 
-
-    // mutation ni yaratamiz 
-    const {mutate: login, isPending, isError, error} = useMutation({
-
-        // Sorov boshlangan paytda loading holatini yoqamiz
-        onMutate: ()=>{
+    const { mutate: login, isPending, isError, error } = useMutation({
+        onMutate: () => {
             setIsLoading(true);
             setError("");
         },
-        // qaysi funksiyani chaqirish kerakligini aytadi 
-        mutationFn: (data: LoginRequest) =>{
-        console.log("1. mutationFn ishladi:", data); 
-        return loginService(data)
-        },
-
-        // request jonatganimizdan keyin bizga response kelgan bolsa uni storega yozamiz 
-        onSuccess: (response) =>{
-            console.log("2. onSuccess ishladi:", response);
+        mutationFn: (data: LoginRequest) => loginService(data),
+        onSuccess: (response) => {
             const userData = {
                 id: response.id,
                 username: response.username,
@@ -47,28 +31,27 @@ export const useLogin = () =>{
             setError("");
             setIsLoading(false);
 
-            // cookie ga  accessTokenni saqlash 
-           Cookies.set("accessToken", response.accessToken, {
-                expires: 7, // 7 kun davomida saqlanadi,
-                secure: process.env.NODE_ENV === "production", 
-                sameSite: "strict", // Faqat oz saytingizda yuborilda ishalydi 
-                path: '/' // loyihaning barcha sahifalarida ishlaydi 
-           })
-           
-           Cookies.set("refreshToken", response.refreshToken, {
-                expires: 30, // 30 kun davomida saqlanadi,
-                secure: process.env.NODE_ENV === "production", 
+            Cookies.set("accessToken", response.accessToken, {
+                expires: 7,
+                secure: process.env.NODE_ENV === "production",
                 sameSite: "strict",
-                path: '/' 
-           })
+                path: "/",
+            });
 
-            router.push(`/dashboard`);
+            Cookies.set("refreshToken", response.refreshToken, {
+                expires: 30,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "strict",
+                path: "/",
+            });
+
+            router.push("/dashboard");
         },
+        onError: () => {
+            setIsLoading(false);
+            setError("Login qilishda xatolik yuz berdi");
+        },
+    });
 
-        // agar error bolsa 
-        onError: (error) =>{
-            console.log(" Login qilishda xatolik yuz berdi", error);
-        }
-    })
-    return {login, isPending, isError, error};
-}
+    return { login, isPending, isError, error };
+};

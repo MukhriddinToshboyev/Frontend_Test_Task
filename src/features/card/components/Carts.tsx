@@ -1,13 +1,15 @@
 "use client";
 
-import { Trash2, ShoppingCart } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useAddCart } from "../hooks/useAddCart";
 import { cartStore } from "../store/Cart.store";
-import Image from "next/image";
+import { useAuthStore } from "../../auth/store/auth.store";
 
 export const CartDrawer = () => {
-
-  const { cartProducts, removeFromCart, clearCart } = cartStore();
+  const router = useRouter();
+  const { isAuthenticated } = useAuthStore();
+  const { cartProducts, removeFromCart, clearCart, incrementQuantity, decrementQuantity } = cartStore();
   const { addCart, isAdding } = useAddCart();
   const products = cartProducts ?? [];
 
@@ -31,12 +33,13 @@ export const CartDrawer = () => {
 
  const handleSubmit = () => {
         if (cartProducts.length === 0) return;
+        if (!isAuthenticated) {
+          router.push("/login");
+          return;
+        }
         const products = cartProducts.map((q) => ({
             id: q.id,
             quantity: q.quantity,
-            title: q.title,
-            price: q.price,
-            thumbnail: q.thumbnail,
         }));
         addCart(products);
     };
@@ -60,10 +63,10 @@ export const CartDrawer = () => {
             className="flex items-center gap-4 p-3 bg-white border border-neutral-200 hover:border-black rounded transition-all duration-200 group"
           >
             <div className="w-12 h-12 flex items-center justify-center bg-neutral-50 border border-neutral-100 rounded p-1 shrink-0">
-              <Image
+              <img
                 src={product.thumbnail || "/placeholder.jpg"}
                 alt={product.title}
-                className="w-72 h-72 object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
 
@@ -77,6 +80,25 @@ export const CartDrawer = () => {
             </div>
 
             <div className="flex items-center gap-3 shrink-0">
+              <div className="flex items-center border border-neutral-300 rounded overflow-hidden">
+                <button
+                  onClick={() => decrementQuantity(product.id)}
+                  className="h-8 w-8 flex items-center justify-center hover:bg-neutral-100"
+                  aria-label="Kamaytirish"
+                >
+                  <Minus size={13} />
+                </button>
+                <span className="h-8 min-w-8 px-2 flex items-center justify-center text-[11px] font-black border-x border-neutral-300">
+                  {product.quantity}
+                </span>
+                <button
+                  onClick={() => incrementQuantity(product.id)}
+                  className="h-8 w-8 flex items-center justify-center hover:bg-neutral-100"
+                  aria-label="Oshirish"
+                >
+                  <Plus size={13} />
+                </button>
+              </div>
               <span className="text-xs font-black text-neutral-900">
                 ${(product.price * product.quantity).toLocaleString()}
               </span>
