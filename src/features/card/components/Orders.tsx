@@ -4,10 +4,11 @@ import { Trash2, ShoppingCart } from "lucide-react";
 import { useGetCarts } from "../hooks/useGetCarts";
 import { useDeleteCart } from "../hooks";
 import { Product } from "../../products/types";
+import { useDeleteProduct } from "../../products/hooks";
 
 export const Orders = () => {
   const { data, isLoading, isError } = useGetCarts();
-  const { deleteCart, isDeleting } = useDeleteCart();
+  const { deleteProduct } = useDeleteProduct();
   const products = data?.products ?? [];
 
     const total = products.reduce(
@@ -82,13 +83,15 @@ export const Orders = () => {
                 ${(product.price * product.quantity).toLocaleString()}
               </span>
               <button
-                onClick={() => deleteCart(product.id)}
-                disabled={isDeleting}
-                title="Mahsulotni o'chirish"
-                className="p-2 text-neutral-300 hover:text-red-500 border border-transparent hover:border-red-100 hover:bg-red-50/50 rounded transition-all duration-150 disabled:opacity-40 shrink-0"
-              >
-                <Trash2 size={14} />
-              </button>
+                onClick={(e) => {
+                e.stopPropagation();
+                deleteProduct(product.id);
+                }}
+                className="p-1.5 bg-white border border-neutral-200 rounded hover:border-red-500 hover:text-red-500 text-neutral-400 transition-all"
+                  aria-label="Ochirish"
+                  >
+                  <Trash2 size={12} />
+                </button>
             </div>
           </div>
         ))}

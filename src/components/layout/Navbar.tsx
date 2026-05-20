@@ -5,15 +5,14 @@ import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/src/features/auth/store/auth.store";
 import {
   Heart,
+  Home,
   LayoutDashboard,
   ListOrdered,
   LogIn,
-  Package,
   ShoppingCart,
 } from "lucide-react";
 
 const PUBLIC_NAV_ITEMS = [
-  { label: "Products", href: "/home/products", icon: Package },
   { label: "Favorites", href: "/favorites", icon: Heart },
   { label: "Cart", href: "/cart", icon: ShoppingCart },
 ];
@@ -35,12 +34,13 @@ export const Navbar = () => {
   const navItems = isAuthenticated ? AUTH_NAV_ITEMS : PUBLIC_NAV_ITEMS;
 
   return (
-    <header className="h-14 border-b border-neutral-200 bg-white flex items-center justify-between px-6 font-mono sticky top-0 z-50">
-      <Link href="/" className="text-sm font-black uppercase tracking-widest">
-        E-Commerce
+    <header className="h-14 p-10 border-b border-neutral-200 bg-white flex items-center justify-center px-6 font-mono sticky top-0 z-50">
+      <Link href="/" className=" flex w-30 text-sm font-black uppercase tracking-widest">
+       <Home size={20} className="w-10"/>
+        Home 
       </Link>
 
-      <nav className="flex items-center gap-1">
+      <nav className="flex items-center gap-5">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive =

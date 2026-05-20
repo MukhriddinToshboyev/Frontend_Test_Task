@@ -1,16 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
 import { useGetUsers } from "../hooks";
 import { IUser } from "../types";
 import { CreateUserModal } from "./CreateUserModal";
+import { useRouter } from "next/navigation";
 
 export const UsersTable = () => {
+
+    const router = useRouter();
+
     const [isCreateOpen, setIsCreateOpen] = useState(false);
     const { data, isLoading, isError } = useGetUsers();
 
-   const users = (data?.users ?? []).filter((user: IUser) => user.role === "user");
+   const users = (data?.users ?? [])
+//    .filter((user: IUser) => user.role === "user");
 
     if (isLoading) {
         return (
@@ -31,6 +36,13 @@ export const UsersTable = () => {
     return (
         <div className="font-mono">
             <div className="mb-4 flex items-center justify-between">
+
+             <button
+                    onClick={() => router.push("/dashboard")}
+                    className="h-9 w-9 flex items-center justify-center border border-neutral-200 rounded hover:bg-black hover:text-white hover:border-black transition-all"
+                >
+                    <ArrowLeft size={16} />
+             </button>
                 <div>
                     <h1 className="text-xl font-black uppercase tracking-wider">
                         Foydalanuvchilar
@@ -57,6 +69,7 @@ export const UsersTable = () => {
                             <th className="text-left px-4 py-3 text-[11px] font-black uppercase">Email</th>
                             <th className="text-left px-4 py-3 text-[11px] font-black uppercase">Telefon</th>
                             <th className="text-left px-4 py-3 text-[11px] font-black uppercase">Kompaniya</th>
+                            <th className="text-left px-4 py-3 text-[11px] font-black uppercase">Role</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,7 +79,7 @@ export const UsersTable = () => {
                                 className="border-b border-neutral-100 hover:bg-neutral-50 transition-all"
                             >
                                 <td className="px-4 py-3 text-[11px] text-neutral-400">
-                                    {user.id - 15}
+                                    {user.id}
                                 </td>
                                 <td className="px-4 py-3">
                                     <div className="flex items-center gap-2">
@@ -94,6 +107,9 @@ export const UsersTable = () => {
                                 <td className="px-4 py-3">
                                     <p className="text-[11px] font-bold">{user.company.name}</p>
                                     <p className="text-[10px] text-neutral-400">{user.company.title}</p>
+                                </td>
+                                <td className="px-4 py-3 text-[11px] text-neutral-600">
+                                    {user.role}
                                 </td>
                             </tr>
                         ))}

@@ -1,5 +1,5 @@
 
-import { AdminSidebar } from "@/src/features/users/components/AdminSidebar";
+import { Sidebar } from "@/src/components/layout/Sidebar";
 
 export default function DashboardLayout({
   children,
@@ -8,7 +8,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="flex h-screen">
-      <AdminSidebar />
+      <Sidebar />
       <main className="flex-1 overflow-auto">
         {children}
       </main>

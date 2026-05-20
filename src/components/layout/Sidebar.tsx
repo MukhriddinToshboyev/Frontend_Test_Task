@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { LogOut, Shield } from "lucide-react";
-import { useAuthStore } from "../../auth/store/auth.store";
+import { useAuthStore } from "../../features/auth/store/auth.store";
 
-export const AdminSidebar = () => {
+export const Sidebar = () => {
   const router = useRouter();
   const { user, logout } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
@@ -20,26 +20,21 @@ export const AdminSidebar = () => {
   };
 
   return (
-    <aside className="w-64 min-h-screen border-r border-neutral-200 bg-white p-4 font-mono flex flex-col">
-
-      {/* Yuqori qism */}
+    <aside className="w-64 overflow-hidden h-screen sticky top-0 border-r border-neutral-200 bg-white p-4 font-mono flex flex-col justify-between shrink-0">
       <div>
-        <p className="text-sm font-black uppercase tracking-widest mb-4">
+        <p className="text-xl font-black uppercase tracking-widest mb-4">
           Admin Panel
         </p>
         <Link
           href="/admin/users"
-          className="flex items-center gap-2 w-full border border-black bg-black text-white px-3 py-2 text-[11px] font-black uppercase rounded"
+          className="flex items-center gap-2 w-full border border-black bg-black text-white px-3 py-2 text-[20px] font-black uppercase rounded"
         >
           <Shield size={15} />
           Admin
         </Link>
       </div>
 
-      {/* Pastki qism — user card */}
-      <div className="mt-auto relative">
-
-        {/* Tooltip — user card ustidan yuqoriga chiqadi */}
+      <div className="relative">
         {isOpen && user && (
           <div className="absolute bottom-full left-0 w-full border border-black bg-white shadow-lg rounded p-3 text-[11px] z-20 mb-2">
             <div className="flex items-center gap-2 border-b border-neutral-100 pb-2 mb-2">
@@ -69,7 +64,6 @@ export const AdminSidebar = () => {
           </div>
         )}
 
-        {/* User card */}
         <div className="border border-neutral-200 rounded p-2 flex items-center gap-2">
           <button
             onClick={() => setIsOpen((prev) => !prev)}
@@ -104,7 +98,6 @@ export const AdminSidebar = () => {
             <LogOut size={15} />
           </button>
         </div>
-
       </div>
     </aside>
   );

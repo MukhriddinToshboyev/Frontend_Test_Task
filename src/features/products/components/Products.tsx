@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Heart, Minus, Pencil, Plus, Search, Trash2, X } from "lucide-react";
+import { Heart, Minus, Pencil, Plus, Trash2, X } from "lucide-react";
 import { useAuthStore } from "../../auth/store/auth.store";
 import { cartStore } from "../../card/store/Cart.store";
 import { favoritesStore } from "../../favorites/store";
@@ -119,7 +119,6 @@ export const Products = () => {
           </div>
 
           <div className="relative flex items-center w-full md:w-auto">
-            <Search size={14} className="absolute left-3 text-neutral-300" />
             <input
               type="text"
               value={searchTerm}
