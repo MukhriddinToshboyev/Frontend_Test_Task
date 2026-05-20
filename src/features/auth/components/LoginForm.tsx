@@ -33,42 +33,22 @@ export const LoginForm = () => {
   const onSubmit = (data: LoginFormData) => login(data);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-neutral-100 p-6">
+    <div className="fixed inset-0 flex items-center justify-center bg-[var(--background)] p-4">
 
-      {/* Background grid */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: `linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)`,
-          backgroundSize: "40px 40px",
-        }}
-      />
+      <div className="w-full max-w-sm bg-white border border-black font-mono">
 
-      {/* Card */}
-      <div className="relative p-10 w-full max-w-lg bg-white border-2 border-black shadow-2xl">
-
-        {/* Yuqori aksent chiziq */}
-        <div className="h-1 w-full bg-black" />
-
-        {/* Header */}
-        <div className="px-14 pt-12 pb-10 border-b-2 border-black">
-          <div className="flex items-center gap-2 mb-8">
-            <div className="w-2.5 h-2.5 bg-black rounded-full" />
-            <span className="text-[11px] font-black uppercase tracking-[0.25em] text-neutral-400">
-              Admin Dashboard
-            </span>
-          </div>
-          <h1 className="text-5xl font-black uppercase tracking-tight text-black leading-none">
-            Tizimga<br />Kirish
+        <div className="px-6 py-5 border-b border-black">
+          <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400 mb-1">
+            Admin Dashboard
+          </p>
+          <h1 className="text-2xl font-black uppercase tracking-tight text-black">
+            Tizimga Kirish
           </h1>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="px-14 py-12 space-y-10">
-
-          {/* Username */}
-          <div className="space-y-2">
-            <label className="block text-[11px] font-black uppercase tracking-[0.2em] text-neutral-500">
+        <form onSubmit={handleSubmit(onSubmit)} className="px-6 py-6 space-y-5">
+          <div className="space-y-1">
+            <label className="block text-[10px] font-black uppercase tracking-widest text-neutral-500">
               Username
             </label>
             <input
@@ -77,25 +57,25 @@ export const LoginForm = () => {
               placeholder="emilys"
               autoComplete="username"
               className={`
-                w-full px-0 py-3 text-base font-mono text-black bg-transparent
-                border-b-2 outline-none transition-all duration-200
+                w-full px-3 py-2 text-xs font-mono text-black bg-neutral-50
+                border outline-none transition-all duration-200
                 placeholder:text-neutral-300
                 ${errors.username
                   ? "border-red-500"
-                  : "border-neutral-300 focus:border-black"
+                  : "border-neutral-200 focus:border-black"
                 }
               `}
             />
             {errors.username && (
-              <p className="text-red-500 text-[11px] font-bold uppercase tracking-wide mt-1">
-                — {errors.username.message}
+              <p className="text-red-500 text-[10px] font-bold uppercase">
+                {errors.username.message}
               </p>
             )}
           </div>
 
           {/* Password */}
-          <div className="space-y-2">
-            <label className="block text-[11px] font-black uppercase tracking-[0.2em] text-neutral-500">
+          <div className="space-y-1">
+            <label className="block text-[10px] font-black uppercase tracking-widest text-neutral-500">
               Parol
             </label>
             <input
@@ -104,61 +84,53 @@ export const LoginForm = () => {
               placeholder="••••••••"
               autoComplete="current-password"
               className={`
-                w-full px-0 py-3 text-base font-mono text-black bg-transparent
-                border-b-2 outline-none transition-all duration-200
+                w-full px-3 py-2 text-xs font-mono text-black bg-neutral-50
+                border outline-none transition-all duration-200
                 placeholder:text-neutral-300
                 ${errors.password
                   ? "border-red-500"
-                  : "border-neutral-300 focus:border-black"
+                  : "border-neutral-200 focus:border-black"
                 }
               `}
             />
             {errors.password && (
-              <p className="text-red-500 text-[11px] font-bold uppercase tracking-wide mt-1">
-                — {errors.password.message}
+              <p className="text-red-500 text-[10px] font-bold uppercase">
+                {errors.password.message}
               </p>
             )}
           </div>
 
           {/* Submit */}
-          <div className="pt-2">
-            <button
-              type="submit"
-              disabled={isPending}
-              className="
-                w-full py-5 bg-black text-white
-                text-[13px] font-black uppercase tracking-[0.2em]
-                hover:bg-neutral-800 active:scale-[0.99]
-                transition-all duration-150
-                disabled:bg-neutral-300 disabled:cursor-not-allowed
-                flex items-center justify-center gap-2
-              "
-            >
-              {isPending ? (
-                <>
-                  <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Kirish...
-                </>
-              ) : (
-                "Kirish →"
-              )}
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={isPending}
+            className="
+              w-full py-2.5 bg-black text-white
+              text-xs font-black uppercase tracking-widest
+              hover:bg-neutral-800 active:scale-[0.99]
+              transition-all duration-150
+              disabled:bg-neutral-300 disabled:cursor-not-allowed
+              flex items-center justify-center gap-2
+            "
+          >
+            {isPending ? (
+              <>
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Kirish...
+              </>
+            ) : (
+              "Kirish →"
+            )}
+          </button>
 
         </form>
 
         {/* Footer */}
-        <div className="px-14 py-5 border-t-2 border-black flex items-center justify-between">
-          <span className="text-[11px] text-neutral-400 uppercase tracking-widest font-bold">
+        <div className="px-6 py-3 border-t border-neutral-200">
+          <span className="text-[10px] text-neutral-400 uppercase tracking-widest font-bold">
             © 2026
           </span>
-          <div className="flex gap-1.5">
-            <div className="w-2 h-2 bg-black rounded-full" />
-            <div className="w-2 h-2 bg-neutral-200 rounded-full" />
-            <div className="w-2 h-2 bg-neutral-200 rounded-full" />
-          </div>
         </div>
-
       </div>
     </div>
   );
