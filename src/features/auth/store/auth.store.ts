@@ -42,7 +42,6 @@ interface AuthState {
         }),
 
       setIsLoading: (isLoading) => set({isLoading}),
-
       setError: (error) => set({error}),
 
       logout: () =>

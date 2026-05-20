@@ -3,11 +3,9 @@
 import { Trash2, ShoppingCart } from "lucide-react";
 import { useAddCart } from "../hooks/useAddCart";
 import { cartStore } from "../store/Cart.store";
-// import { useRouter } from "next/router";
+import Image from "next/image";
 
 export const CartDrawer = () => {
-
-    // const  router = useRouter()
 
   const { cartProducts, removeFromCart, clearCart } = cartStore();
   const { addCart, isAdding } = useAddCart();
@@ -33,14 +31,12 @@ export const CartDrawer = () => {
 
  const handleSubmit = () => {
         if (cartProducts.length === 0) return;
-
-        const products = cartProducts.map((p) => ({
-            id: p.id,
-            quantity: p.quantity,
-            title: p.title,
-            price: p.price,
-            thumbnail: p.thumbnail,
-
+        const products = cartProducts.map((q) => ({
+            id: q.id,
+            quantity: q.quantity,
+            title: q.title,
+            price: q.price,
+            thumbnail: q.thumbnail,
         }));
         addCart(products);
     };
@@ -64,10 +60,10 @@ export const CartDrawer = () => {
             className="flex items-center gap-4 p-3 bg-white border border-neutral-200 hover:border-black rounded transition-all duration-200 group"
           >
             <div className="w-12 h-12 flex items-center justify-center bg-neutral-50 border border-neutral-100 rounded p-1 shrink-0">
-              <img
+              <Image
                 src={product.thumbnail || "/placeholder.jpg"}
                 alt={product.title}
-                className="max-w-full max-h-full object-contain"
+                className="w-72 h-72 object-cover"
               />
             </div>
 
@@ -113,12 +109,9 @@ export const CartDrawer = () => {
             ${total.toLocaleString()}
           </span>
         </div>
-
-
-
          <button
-            onClick={handleSubmit}
-            disabled={isAdding}
+          onClick={handleSubmit}
+          disabled={isAdding}
           className="w-full text-center bg-black text-white py-3 text-xs font-bold uppercase tracking-widest border border-black hover:bg-white hover:text-black transition-colors duration-200 rounded-sm"
             >
             {isAdding ? "Yuborilmoqda..." : "Buyurtma berish"}

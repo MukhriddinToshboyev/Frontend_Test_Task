@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { useEffect } from "react"
 import { productStore } from "../store/product.store"
-import { getSearchService } from "../services/getSearch.service"
+import { getSearchService } from "../services"
 
 
     export const useSearchProducts = (searchTerm: string)=>{

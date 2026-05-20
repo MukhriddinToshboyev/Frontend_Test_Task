@@ -4,16 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import { ProductRequest } from "../types";
 import { productStore } from "../store/product.store";
 import { useEffect } from "react";
-import { getProductsService } from "../services/products.service";
+import { getProductsService } from "../services";
 
 
-export const useProducts = (params?: ProductRequest) =>{
+export const useProducts = (params?: ProductRequest, category?: string) =>{
     
     const {setProducts, setTotal, setIsloading, setError} = productStore()
 
     const query = useQuery({
-        queryKey: ["products", params],
-        queryFn: ()=> getProductsService(params),
+        queryKey: ["products", params, category],
+        queryFn: ()=> getProductsService(params, category),
     })
 
     useEffect(()=>{

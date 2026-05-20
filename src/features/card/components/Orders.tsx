@@ -2,8 +2,9 @@
 
 import { Trash2, ShoppingCart } from "lucide-react";
 import { useGetCarts } from "../hooks/useGetCarts";
-import { useDeleteCart } from "../hooks/useDeleteCart";
+import { useDeleteCart } from "../hooks";
 import { Product } from "../../products/types";
+import Image from "next/image";
 
 export const Orders = () => {
   const { data, isLoading, isError } = useGetCarts();
@@ -11,9 +12,7 @@ export const Orders = () => {
   const products = data?.products ?? [];
 
     const total = products.reduce(
-    (sum: number, product: Product) => sum + product.price * (product.quantity || 1),
-    0
-    );
+    (sum: number, product: Product) => sum + product.price * product.quantity, 0 );
 
   if (isLoading) {
     return (
@@ -63,10 +62,10 @@ export const Orders = () => {
             className="flex items-center gap-4 p-3 bg-white border border-neutral-200 hover:border-black rounded transition-all duration-200 group"
           >
             <div className="w-12 h-12 flex items-center justify-center bg-neutral-50 border border-neutral-100 rounded p-1 shrink-0">
-              <img
+              <Image
                 src={product.thumbnail || "/placeholder.jpg"}
                 alt={product.title}
-                className="max-w-full max-h-full object-contain"
+                className="object-cover w-72 h-72"
               />
             </div>
 

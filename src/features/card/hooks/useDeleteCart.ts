@@ -1,7 +1,7 @@
 "use client"
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteCartService } from "../services/deleteCard.service";
+import { deleteCartService } from "../services";
 import { Product } from "../../products/types";
 
 export const useDeleteCart = () => {

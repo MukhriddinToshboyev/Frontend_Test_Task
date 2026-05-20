@@ -2,9 +2,13 @@ import api from "@/src/lib/axios";
 import { ProductRequest, ProductResponse } from "../types";
 
 
-export const getProductsService = async (params?: ProductRequest): Promise<ProductResponse>  =>{
+export const getProductsService = async (params?: ProductRequest, category?: string): Promise<ProductResponse>  =>{
 
-    const response = await api.get<ProductResponse>("/auth/products",{
+    const url = category
+    ? `/products/category/${category}`
+    : `/products`;
+
+    const response = await api.get<ProductResponse>(url,{
         params:{
             limit: params?.limit || 0,
             skip: params?.skip || 0,

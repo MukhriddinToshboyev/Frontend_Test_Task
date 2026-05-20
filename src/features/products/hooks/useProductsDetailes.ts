@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { productStore } from "../store/product.store"
-import { getProductsServiceById } from "../services/products-id.service"
+import { getProductsServiceById } from "../services"
 import { useEffect } from "react"
 
 

@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { productStore } from "../store/product.store";
-import { updateProductService } from "../services/update-product.service";
+import { updateProductService } from "../services";
+import { UpdateProductRequest } from "../types";
 
 
 
@@ -8,7 +9,7 @@ export const useUpdateProduct = () => {
     const { products, setProducts } = productStore();
 
     const { mutate: updateProduct, isPending } = useMutation({
-        mutationFn: ({ id, data }: { id: number; data: any }) => 
+        mutationFn: ({ id, data }: { id: number; data: UpdateProductRequest }) => 
             updateProductService(id, data),
 
         onSuccess: (updatedProduct) => {

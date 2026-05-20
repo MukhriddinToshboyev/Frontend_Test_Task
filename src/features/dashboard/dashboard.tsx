@@ -1,20 +1,18 @@
-
 "use client";
 
 import { useRouter } from "next/navigation";
 import { productStore } from "../products/store/product.store"; 
+import Image from "next/image";
 
 
 export const  Dashboard =() => {
   const router = useRouter();
   const { products } = productStore();
-
   
   const heroProduct = products?.[0];
 
   return (
     <div className="space-y-12 font-mono text-black p-4">
-      
       <div className="border border-black bg-neutral-50 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6 rounded">
         <div className="space-y-4 max-w-xl">
           <span className="text-[10px] bg-black text-white px-2 py-0.5 font-bold uppercase tracking-widest">
@@ -24,22 +22,22 @@ export const  Dashboard =() => {
             Sifatli va hamyonbop mahsulotlar faqat bizda
           </h1>
           <p className="text-xs text-neutral-500 uppercase leading-relaxed">
-            DummyJSON bazasidagi eng sara, yuqori reytingga ega bo'lgan mahsulotlarni qulay interfeys orqali sotib oling.
+            DummyJSON bazasidagi eng sara, yuqori reytingga ega bolgan mahsulotlarni qulay interfeys orqali sotib oling.
           </p>
           <button
             onClick={() => router.push("/dashboard/products")}
             className="inline-block border border-black bg-black text-white text-xs font-bold uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
           >
-            Xaridni boshlash ➔
+            Xaridni boshlash 
           </button>
         </div>
 
         {heroProduct && (
           <div className="w-48 h-48 md:w-64 md:h-64 flex items-center justify-center bg-white border border-neutral-200 p-4 rounded shadow-sm">
-            <img
+            <Image
               src={heroProduct.thumbnail}
               alt={heroProduct.title}
-              className="max-w-full max-h-full object-contain"
+              className="w-72 h-72 object-contain"
             />
           </div>
         )}
@@ -54,10 +52,9 @@ export const  Dashboard =() => {
             onClick={() => router.push("/dashboard/products")}
             className="text-[10px] font-bold uppercase underline hover:text-neutral-500"
           >
-            Hammasini ko'rish
+            Hammasini korish
           </button>
         </div>
-
 
         {products && products.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -69,7 +66,7 @@ export const  Dashboard =() => {
               >
                 <div>
                   <div className="aspect-square w-full bg-neutral-50 border overflow-hidden rounded mb-3 flex items-center justify-center p-2">
-                    <img
+                    <Image
                       src={item.thumbnail}
                       alt={item.title}
                       className="object-contain max-h-full max-w-full"

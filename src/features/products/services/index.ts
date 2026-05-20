@@ -1,0 +1,7 @@
+export*from "./create-product.service"
+export*from "./getSearch.service"
+export*from "./products.service"
+export*from "./products-delete.service"
+export*from "./products-id.service"
+export*from "./products.service"
+export*from "./update-product.service"

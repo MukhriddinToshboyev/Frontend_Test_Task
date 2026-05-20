@@ -2,7 +2,7 @@
 "use client"
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addCartService } from "../services/addCard.service";
+import { addCartService } from "../services";
 import { cartStore } from "../store/Cart.store";
 
 export const useAddCart = () => {
@@ -15,10 +15,9 @@ export const useAddCart = () => {
 
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["carts"] });
-            clearCart(); // storeni tozalash 
+            clearCart(); 
             console.log("Cart qo'shildi:", data);
         },
-
         onError: (error) => {
             console.log("Xatolik:", error);
         }

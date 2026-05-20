@@ -1,7 +1,7 @@
 "use client";
 
-import { useGetUsers } from "../hooks/useGetUsers";
-import { IUser } from "../types/users.types";
+import { useGetUsers } from "../hooks";
+import { IUser } from "../types";
 
 export const UsersTable = () => {
     const { data, isLoading, isError } = useGetUsers();

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { productStore } from "../store/product.store";
-import { deleteProductService } from "../services/products-delete.service";
+import { deleteProductService } from "../services";
 
 
 export const useDeleteProduct = () => {
