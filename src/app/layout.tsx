@@ -10,15 +10,15 @@ export const metadata: Metadata = {
   description: 'Modern e-commerce dashboard',
 };
 
-export  default function  RootLayout ({children}: {children: React.ReactNode}){
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html>
-      <body>
+    <html lang="uz">
+      <body className="bg-white text-black min-h-screen">
         <Providers>
-          <Navbar/>
+          <Navbar />
           {children}
         </Providers>
-        </body>
+      </body>
     </html>
   );
 }

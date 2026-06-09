@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { LogOut, Shield } from "lucide-react";
 import { useAuthStore } from "../../features/auth/store/auth.store";
 
 export const Sidebar = () => {
+  const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
@@ -20,14 +21,18 @@ export const Sidebar = () => {
   };
 
   return (
-    <aside className="w-64 overflow-hidden h-screen sticky top-0 border-r border-neutral-200 bg-white p-4 font-mono flex flex-col justify-between shrink-0">
+    <aside className="w-64 overflow-hidden h-full sticky top-0 border-r border-neutral-200 bg-white p-4 font-mono flex flex-col justify-between shrink-0 self-start">
       <div>
         <p className="text-xl font-black uppercase tracking-widest mb-4">
           Admin Panel
         </p>
         <Link
           href="/admin/users"
-          className="flex items-center gap-2 w-full border border-black bg-black text-white px-3 py-2 text-[20px] font-black uppercase rounded"
+          className={`flex items-center gap-2 w-full border px-3 py-2 text-sm font-black uppercase rounded transition-colors ${
+            pathname.startsWith("/admin")
+              ? "border-black bg-black text-white"
+              : "border-neutral-300 bg-white text-neutral-700 hover:border-black hover:bg-black hover:text-white"
+          }`}
         >
           <Shield size={15} />
           Admin
