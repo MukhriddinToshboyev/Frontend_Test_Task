@@ -21,7 +21,7 @@ export const Sidebar = () => {
   };
 
   return (
-    <aside className="w-64 overflow-hidden h-full sticky top-0 border-r border-neutral-200 bg-white p-4 font-mono flex flex-col justify-between shrink-0 self-start">
+    <aside className="w-64 overflow-hidden h-screen sticky top-0 border-r border-neutral-200 bg-white p-4 font-mono flex flex-col justify-between shrink-0">
       <div>
         <p className="text-xl font-black uppercase tracking-widest mb-4">
           Admin Panel
