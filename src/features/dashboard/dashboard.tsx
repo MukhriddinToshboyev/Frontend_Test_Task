@@ -2,12 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { useProducts } from "../products/hooks";
+import { useState } from "react";
 
 export const Dashboard = () => {
   const router = useRouter();
   const { data } = useProducts({ limit: 4 });
   const products = data?.products ?? [];
   const heroProduct = products[0];
+  const [item, setItem] = useState();
 
   return (
     <div className="space-y-12 font-mono text-black p-6">
